@@ -35,3 +35,9 @@ assets/logo.png        # Ripples logo
 - Wire backend (auth, holdings API)
 - Add real charts (e.g. `react-native-svg-charts` / `victory-native`)
 - Onboarding / KYC flow
+
+
+## To Run the application on Local System
+
+- $env:REACT_NATIVE_PACKAGER_HOSTNAME="10.58.65.57" (Systems IP shall be replaced here.)
+- npx expo start --clear
