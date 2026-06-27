@@ -1,0 +1,30 @@
+{
+  "expo": {
+    "name": "Ripples",
+    "slug": "ripples-mobile",
+    "version": "0.1.0",
+    "scheme": "ripples",
+    "orientation": "portrait",
+    "icon": "./assets/ripples-logo.png",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/ripples-logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#2E3342"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.ripples.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/ripples-logo.png",
+        "backgroundColor": "#2E3342"
+      },
+      "package": "com.ripples.app"
+    },
+    "plugins": ["expo-router", "expo-font"],
+    "experiments": { "typedRoutes": true }
+  }
+}
