@@ -19,7 +19,7 @@ const getEnvVar = (key: string, defaultValue: string = ''): string => {
 export const API_CONFIG = {
   // Shared base URL for staging backend
   BASE_URL: getEnvVar('EXPO_PUBLIC_API_BASE_URL', 'https://www.api.bluelakeinvesting.com/api'),
-  AUTH_PATH: getEnvVar('EXPO_PUBLIC_AUTH_PATH', '/auth'),
+  AUTH_PATH: getEnvVar('EXPO_PUBLIC_AUTH_PATH', '/b-auth'),
   USER_PATH: getEnvVar('EXPO_PUBLIC_USER_PATH', '/users'),
   BASKET_PATH: getEnvVar('EXPO_PUBLIC_BASKET_PATH', '/baskets'),
   ORDERS_PATH: getEnvVar('EXPO_PUBLIC_ORDERS_PATH', '/orders'),
@@ -44,6 +44,12 @@ export const ENDPOINTS = {
   auth: {
     login: `${API_CONFIG.BASE_URL}${API_CONFIG.AUTH_PATH}/login`,
     signup: `${API_CONFIG.BASE_URL}${API_CONFIG.AUTH_PATH}/signup`,
+    checkUser: `${API_CONFIG.BASE_URL}${API_CONFIG.AUTH_PATH}/check-user`,
+    resendOtp: `${API_CONFIG.BASE_URL}${API_CONFIG.AUTH_PATH}/resend-otp`,
+    verifyOtp: `${API_CONFIG.BASE_URL}${API_CONFIG.AUTH_PATH}/verify-otp`,
+    savePassword: `${API_CONFIG.BASE_URL}${API_CONFIG.AUTH_PATH}/save-password`,
+    verifyPassword: `${API_CONFIG.BASE_URL}${API_CONFIG.AUTH_PATH}/verify-password`,
+    passwordResetMail: `${API_CONFIG.BASE_URL}${API_CONFIG.AUTH_PATH}/password-reset-mail`,
     logout: `${API_CONFIG.BASE_URL}${API_CONFIG.AUTH_PATH}/logout`,
     refresh: `${API_CONFIG.BASE_URL}${API_CONFIG.AUTH_PATH}/refresh`,
     verify: `${API_CONFIG.BASE_URL}${API_CONFIG.AUTH_PATH}/verify`,

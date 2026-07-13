@@ -34,7 +34,7 @@ export function AddToCartModal({
   };
 
   return (
-    <View style={{ position: "absolute", inset: 0, backgroundColor: t.mode === "dark" ? "rgba(21,23,31,0.7)" : "rgba(30,34,48,0.28)", justifyContent: "flex-end", zIndex: 50 }}>
+    <View style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, backgroundColor: t.mode === "dark" ? "rgba(21,23,31,0.7)" : "rgba(30,34,48,0.28)", justifyContent: "flex-end", zIndex: 50 }}>
       <Pressable onPress={onClose} style={{ flex: 1 }} />
       <View style={{ backgroundColor: t.background, borderTopLeftRadius: 24, borderTopRightRadius: 24, borderTopWidth: 1, borderColor: t.border, maxHeight: "88%" }}>
         <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", padding: 16, borderBottomWidth: 1, borderBottomColor: t.border }}>

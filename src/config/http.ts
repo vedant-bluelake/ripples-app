@@ -31,6 +31,10 @@ class HttpClient {
     this.timeout = timeout;
   }
 
+  private log(...args: any[]) {
+    console.log('[HTTP]', ...args);
+  }
+
   /**
    * Build full URL with query parameters
    */
@@ -82,17 +86,22 @@ class HttpClient {
   ): Promise<ApiResponse<T>> {
     try {
       const url = this.buildUrl(endpoint, options?.params);
-      const response = await this.fetchWithTimeout(url, {
+      const requestOptions = {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
           ...options?.headers,
         },
         timeout: options?.timeout,
-      });
+      } as RequestInit & { timeout?: number };
+
+      this.log('Request GET:', url, requestOptions);
+      const response = await this.fetchWithTimeout(url, requestOptions);
+      this.log('Response GET:', url, 'status=', response.status);
 
       return this.handleResponse<T>(response);
     } catch (error) {
+      this.log('Error GET:', endpoint, error);
       return this.handleError<T>(error);
     }
   }
@@ -107,18 +116,24 @@ class HttpClient {
   ): Promise<ApiResponse<T>> {
     try {
       const url = this.buildUrl(endpoint);
-      const response = await this.fetchWithTimeout(url, {
+      const requestBody = data ? JSON.stringify(data) : undefined;
+      const requestOptions = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           ...options?.headers,
         },
-        body: data ? JSON.stringify(data) : undefined,
+        body: requestBody,
         timeout: options?.timeout,
-      });
+      } as RequestInit & { timeout?: number };
+
+      this.log('Request POST:', url, 'body=', data, requestOptions);
+      const response = await this.fetchWithTimeout(url, requestOptions);
+      this.log('Response POST:', url, 'status=', response.status);
 
       return this.handleResponse<T>(response);
     } catch (error) {
+      this.log('Error POST:', endpoint, error);
       return this.handleError<T>(error);
     }
   }
@@ -133,18 +148,24 @@ class HttpClient {
   ): Promise<ApiResponse<T>> {
     try {
       const url = this.buildUrl(endpoint);
-      const response = await this.fetchWithTimeout(url, {
+      const requestBody = data ? JSON.stringify(data) : undefined;
+      const requestOptions = {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
           ...options?.headers,
         },
-        body: data ? JSON.stringify(data) : undefined,
+        body: requestBody,
         timeout: options?.timeout,
-      });
+      } as RequestInit & { timeout?: number };
+
+      this.log('Request PUT:', url, 'body=', data, requestOptions);
+      const response = await this.fetchWithTimeout(url, requestOptions);
+      this.log('Response PUT:', url, 'status=', response.status);
 
       return this.handleResponse<T>(response);
     } catch (error) {
+      this.log('Error PUT:', endpoint, error);
       return this.handleError<T>(error);
     }
   }
@@ -158,17 +179,22 @@ class HttpClient {
   ): Promise<ApiResponse<T>> {
     try {
       const url = this.buildUrl(endpoint);
-      const response = await this.fetchWithTimeout(url, {
+      const requestOptions = {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
           ...options?.headers,
         },
         timeout: options?.timeout,
-      });
+      } as RequestInit & { timeout?: number };
+
+      this.log('Request DELETE:', url, requestOptions);
+      const response = await this.fetchWithTimeout(url, requestOptions);
+      this.log('Response DELETE:', url, 'status=', response.status);
 
       return this.handleResponse<T>(response);
     } catch (error) {
+      this.log('Error DELETE:', endpoint, error);
       return this.handleError<T>(error);
     }
   }
@@ -182,6 +208,7 @@ class HttpClient {
 
     try {
       const data = isJson ? await response.json() : await response.text();
+      this.log('Parsed response:', response.url, 'status=', response.status, 'data=', data);
 
       if (!response.ok) {
         return {
@@ -197,6 +224,7 @@ class HttpClient {
         statusCode: response.status,
       };
     } catch (error) {
+      this.log('Response parse error:', response.url, error);
       return {
         success: false,
         error: 'Failed to parse response',
@@ -209,7 +237,8 @@ class HttpClient {
    * Handle error
    */
   private handleError<T>(error: any): ApiResponse<T> {
-    if (error.name === 'AbortError') {
+    this.log('HTTP error:', error);
+    if (error?.name === 'AbortError') {
       return {
         success: false,
         error: 'Request timeout',
